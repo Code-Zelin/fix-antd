@@ -42,6 +42,7 @@ export function removeFileItem(file: UploadFile, fileList: UploadFile[]) {
 
 // ==================== Default Image Preview ====================
 const extname = (url: string = '') => {
+  if (!url) return '';
   const temp = url.split('/');
   const filename = temp[temp.length - 1];
   const filenameWithoutSuffix = filename.split(/#|\?/)[0];
@@ -54,7 +55,7 @@ export const isImageUrl = (file: UploadFile): boolean => {
   if (file.type && !file.thumbUrl) {
     return isImageFileType(file.type);
   }
-  const url: string = (file.thumbUrl || file.url) as string;
+  const url: string = (file.thumbUrl || file.url || '') as string;
   const extension = extname(url);
   if (
     /^data:image\//.test(url) ||
